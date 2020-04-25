@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+{% include 'header.html' %}
+{% block title %} Home {% endblock %}
+{% block body %}
+<div class="col-md-4 offset-4" id='loginpanel'>
+        <img class="mb-4" src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/lock.png" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" onclick="LogIn()" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2020-2022</p>
+</div>
+    
+
+
+<div class="container" id='adminpanel' style="display:none;">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                
+                <h2>Napisi nove <b>Vijesti</b>
+                    <button 
+                        type="button" 
+                        class="btn btn-success float-right"
+                        data-toggle="modal"
+                        data-target="#mymodal">
+                        Dodaj
+                    </button> 
+                </h2>
+
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {%for message in messages%}
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                    {{message}}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                <table class="table table-hover table-dark">
+                    <tr>
+                        <th>Broj</th>
+                        <th>Naslov</th>
+                        <th>Slika</th>
+                        <th>Dodao/la</th>
+                    </tr>
+
+                    {% for row in vijesti %}
+                    <tr>
+                        <td>{{row.id}}</td>
+                        <td>{{row.naslov}}</td>
+                        {% if row.slika != '' %}
+                            <td><img style="max-width: 200px;" class="img-fluid img-thumbnail" src="{{row.slika}}" alt="Nema Slike"></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        <td>{{row.korisnik}}</td>
+
+                        <td>
+                           <a 
+                            href="/update/{{row.id}}" 
+                            class="btn btn-warning btn-xs"
+                            data-toggle="modal"
+                            data-target="#modaledit{{row.id}}"
+                            >Edituj</a>
+                            
+                            <a 
+                            href="/delete/{{row.id}}" 
+                            class="btn btn-danger btn-xs"
+                            onClick="return confirm('Da li stvarno zelite izbrisati ovu vijest ?')"
+                            >Izbrisi</a> 
+                        </td>
+                    </tr>
+                                     <!-- Edit modal -->
+                                    <div class="modal fade" id="modaledit{{row.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Edituj Vijest</h4>
+                                            </div>
+
+                                            <div class="modal-body">
+                                    
+                                                <form action="{{url_for('update')}}" method="POST">
+                                                    <div class="form-group">
+                                                    <label>Naslov</label>
+                                                    <input 
+                                                        type="text" 
+                                                        hidden
+                                                        value="{{row.id}}"
+                                                        name="id"
+                                                        >
+                                                    <input 
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="naslov" 
+                                                        required="1"
+                                                        value="{{row.naslov}}"
+                                                        maxlength="99">
+                                                    </div>
+                                    
+                                                    <div class="form-group">
+                                                    <label>Slika</label>
+                                                    <input 
+                                                        type="text" 
+                                                        class="form-control"
+                                                        name="slika" 
+                                                        value="{{row.slika}}"
+                                                        maxlength="499">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Tekst</label>
+                                                        <textarea 
+                                                            type="text" 
+                                                            class="form-control" 
+                                                            name="tekst" 
+                                                            required="1">
+                                                            {{row.tekst}}
+                                                        </textarea>
+                                                    </div>
+                                    
+                                                    <div class="form-group">
+                                                    <button 
+                                                        class="btn btn-primary" 
+                                                        type="submit">Izvrsi izmjene</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                    
+                                            <div class="modal-footer">
+                                                <button type="button" 
+                                                    class="btn btn-secondary" 
+                                                    data-dismiss="modal">Zatvori</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <!-- Edit modal end -->
+
+                 {% endfor %}
+
+                </table>
+
+
+                <!-- Modal Add News -->
+                <div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                       <div class="modal-content">
+
+                          <div class="modal-header">
+                             <h4 class="modal-title">Dodaj Vijest</h4>
+                          </div>
+
+                          <div class="modal-body">
+                  
+                             <form action="{{url_for('insert')}}" method="POST">
+                                <div class="form-group">
+                                   <label>Naslov</label>
+                                   <input 
+                                    type="text"
+                                    class="form-control"
+                                    name="naslov" 
+                                    required="1"
+                                    maxlength="99">
+                                </div>
+                  
+                                 <div class="form-group">
+                                   <label>Slika</label>
+                                   <input 
+                                    type="text" 
+                                    class="form-control"
+                                    name="slika" 
+                                    maxlength="499">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Tekst</label>
+                                    <textarea 
+                                        type="text" 
+                                        class="form-control" 
+                                        name="tekst" 
+                                        required="1"> 
+                                    </textarea>
+                                </div>
+                  
+                                <div class="form-group">
+                                   <button 
+                                    class="btn btn-primary" 
+                                    type="submit">Dodaj</button>
+                                </div>
+                             </form>
+                          </div>
+                  
+                          <div class="modal-footer">
+                             <button type="button" 
+                                class="btn btn-secondary" 
+                                data-dismiss="modal">Zatvori</button>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function LogIn(){
+        var email = $('#inputEmail').val();
+        var pw = $('#inputPassword').val();
+
+        if(email =='arijana@arijana.com' && pw == 'admin7!'){
+            $('#adminpanel').toggle();
+            $('#loginpanel').toggle();
+        }else{
+            alert('1# Pogresan password ili email!');
+            alert('2# Pogresan password ili email!');
+            alert('3# Pogresan password ili email!');
+        }
+    };
+</script>
+{% endblock %}

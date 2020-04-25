@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% include 'header.html' %}
+{% block title %} Home {% endblock %}
+{% block body %}
+
+<!-- Starts here -->
+{% for row in vijesti %}
+
+<div class="col-md-12 p-3 mb-5">
+    <div class="blog-post col-md-8">
+        <h2 class="blog-post-title">{{row.naslov}}</h2>
+        <p class="blog-post-meta"> autor <strong href="#">{{row.korisnik}}</strong></p>
+        {% if row.slika != '' %}
+            <img style="max-width: 600px; margin-bottom: 5px;" class="img-fluid img-thumbnail col-md-12" src="{{row.slika}}" alt="Nema Slike">
+        {% endif %}
+        <p>{{row.tekst}}</p>
+      </div><!-- /.blog-post -->
+</div>
+
+
+{% endfor %}
+
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Hipnoterapija Ba 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+{% block title %} Hipnoterapija {% endblock %}
+{% block body %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Pocetna <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/kolumne">Kolumne </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="jumbotron" style="border-radius: 0px; background-image: url(../static/images/hypno2.jpg);">
+    <div class="well text-center text-white" >
+        <h1>Hipnoterapija Ba</h1>
+        <h3 class="font-italic">Arijana Tema vise od 5 godina iskustva</h3>
+    </div>
+</div>
+
+{% endblock %}
