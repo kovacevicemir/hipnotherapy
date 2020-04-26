@@ -5,15 +5,16 @@
 
 <!-- Starts here -->
 {% for row in vijesti %}
-
-<div class="col-md-12 p-3 mb-5">
-    <div class="blog-post col-md-8">
+<div class="col-md-12 mb-5">
+    <div class="blog-post col-md-5 offset-md-3">
         <h2 class="blog-post-title">{{row.naslov}}</h2>
         <p class="blog-post-meta"> autor <strong href="#">{{row.korisnik}}</strong></p>
         {% if row.slika != '' %}
-            <img style="max-width: 600px; margin-bottom: 5px;" class="img-fluid img-thumbnail col-md-12" src="{{row.slika}}" alt="Nema Slike">
+            <img style="max-width: 600px;" class="img-fluid mb-2 pl-0 col-md-12" src="{{row.slika}}" alt="Nema Slike">
         {% endif %}
-        <p>{{row.tekst}}</p>
+        <p class="border p-2" style="white-space: pre-line">{{row.tekst[0:400]}}...   
+                <a href="/kolumna/{{row.id}}">Procitaj vise</a>
+        </p>
       </div><!-- /.blog-post -->
 </div>
 
@@ -21,11 +22,5 @@
 {% endfor %}
 
 
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Hipnoterapija Ba 2020</p>
-    </div>
-    <!-- /.container -->
-  </footer>
+{% include 'footer.html' %}
 {% endblock %}

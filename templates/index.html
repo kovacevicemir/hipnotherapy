@@ -67,7 +67,8 @@
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
           </div>
           <div class="card-footer">
-            <a href="#" class="btn btn-primary btn-sm">Saznaj vise</a>
+            <a href="#" data-toggle='modal'
+            data-target='#kontatkmodal' class="btn btn-primary btn-sm">Zatrazi pomoc</a>
           </div>
         </div>
       </div>
@@ -79,7 +80,8 @@
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
           </div>
           <div class="card-footer">
-            <a href="#" class="btn btn-primary btn-sm">Saznaj vise</a>
+            <a href="#" data-toggle='modal'
+            data-target='#kontatkmodal' class="btn btn-primary btn-sm">Zatrazi pomoc</a>
           </div>
         </div>
       </div>
@@ -91,7 +93,8 @@
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
           </div>
           <div class="card-footer">
-            <a href="#" class="btn btn-primary btn-sm">Saznaj vise</a>
+            <a href="#" data-toggle='modal'
+            data-target='#kontatkmodal'class="btn btn-primary btn-sm">Zatrazi pomoc</a>
           </div>
         </div>
       </div>
@@ -102,14 +105,24 @@
 
   </div>
   <!-- /.container -->
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-  <div class="container">
-    <p class="m-0 text-center text-white">Copyright &copy; Hipnoterapija Ba 2020</p>
-  </div>
-  <!-- /.container -->
-</footer>
-  
+  <div id="map"></div>
+{% include 'footer.html' %}
+
+<script>
+function initMap() {
+  // The location of Uluru
+  var uluru = {lat: -25.344, lng: 131.036};
+  // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 4, center: uluru});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: uluru, map: map});
+}
+</script>
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+</script>
 
   </html>
 {% endblock %}

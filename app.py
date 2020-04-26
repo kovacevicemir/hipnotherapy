@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.secret_key = "Secret Key"
 
-ENV = 'prod'
+ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
@@ -86,6 +86,14 @@ def delete(id):
 def Kolumne():
     all_data = Data.query.order_by(Data.id).all()
     return render_template("kolumne.html", vijesti = all_data)
+
+@app.route('/kolumna/<id>', methods=['GET'])
+def Kolumna(id):
+    my_data = Data.query.get(id)
+    if(my_data):
+        return render_template("kolumna.html", kolumna = my_data)
+    else:
+        pass
 
 
 

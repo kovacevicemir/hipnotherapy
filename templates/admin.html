@@ -9,12 +9,12 @@
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox mb-3">
+        <!-- <div class="checkbox mb-3">
           <label>
             <input type="checkbox" value="remember-me"> Remember me
           </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" onclick="LogIn()" type="submit">Sign in</button>
+        </div> -->
+        <button  autofocus class="btn btn-lg btn-primary btn-block" onclick="LogIn()" type="submit">Sign in</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2020-2022</p>
 </div>
     
@@ -153,7 +153,9 @@
                  {% endfor %}
 
                 </table>
-
+                <div class="row justify-content-center">
+                    <button onclick="Logout()"class="btn btn-danger">Logout</button>
+                </div>
 
                 <!-- Modal Add News -->
                 <div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -219,7 +221,24 @@
     </div>
 </div>
 
+
 <script>
+    
+
+    $(document).ready(function(){
+        var check = localStorage.getItem("hpt");
+        if(check == 'ok'){
+            $('#adminpanel').toggle();
+            $('#loginpanel').toggle();
+        }
+    });
+
+    function Logout(){
+        console.log('ddd');
+        localStorage.removeItem("hpt");
+        location.reload();
+    };
+
     function LogIn(){
         var email = $('#inputEmail').val();
         var pw = $('#inputPassword').val();
@@ -227,6 +246,7 @@
         if(email =='arijana@arijana.com' && pw == 'admin7!'){
             $('#adminpanel').toggle();
             $('#loginpanel').toggle();
+            localStorage.setItem("hpt", "ok");
         }else{
             alert('1# Pogresan password ili email!');
             alert('2# Pogresan password ili email!');
@@ -234,4 +254,5 @@
         }
     };
 </script>
+{% include 'footer.html' %}
 {% endblock %}

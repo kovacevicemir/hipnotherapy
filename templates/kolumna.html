@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% include 'header.html' %}
+{% block title %} Home {% endblock %}
+{% block body %}
+
+<!-- Starts here -->
+
+<div class="col-md-12 mb-5">
+    <div class="blog-post col-md-6 offset-md-3">
+        <h2 class="blog-post-title">{{kolumna.naslov}}</h2>
+        <p class="blog-post-meta"> autor <strong href="#">{{kolumna.korisnik}}</strong></p>
+        {% if kolumna.slika != '' %}
+            <img style="max-width: 800px;" class="img-fluid mb-2 pl-0 col-md-12" src="{{kolumna.slika}}" alt="Nema Slike">
+        {% endif %}
+        <p class="border p-2" style="white-space: pre-line">{{kolumna.tekst}}</p>
+      
+        <!-- Load Facebook SDK for JavaScript -->
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+            var current_location = window.location.href;
+            document.write("<div class='fb-share-button' data-href='" + window.location.href + "'></div>");
+        
+        </script>
+
+        <!-- Your share button code -->
+        <!-- <div class="fb-share-button" 
+            data-href="" 
+            >
+        </div> -->
+    </div><!-- /.blog-post -->
+      
+</div>
+
+
+{% include 'footer.html' %}
+{% endblock %}
